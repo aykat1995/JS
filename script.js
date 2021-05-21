@@ -24,7 +24,7 @@ let appData = {
             let a = prompt("Введите обязательную статью расходов в этом месяце", "");
             let b = +prompt("Во сколько обойдется?", "");
         
-            if (typeof(a) === "string" && typeof(b) != null && typeof(a) !== null && a.length < 50 && a != "" && b != "") {
+            if (typeof(a) === "string" && typeof(b) != null && typeof(a) !== null && a.length < 50 && a != "" && b != "" && !isNaN(b)) {
                 appData.expenses[a] = b;
             } else {
                 console.log("Введены некорректные данные");
