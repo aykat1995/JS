@@ -3,11 +3,11 @@ let startButton = document.getElementById("start");
 let budgetValue = document.getElementsByClassName("budget-value")[0];
 let dayBudgetValue = document.getElementsByClassName("daybudget-value")[0];
 let levelValue = document.getElementsByClassName("level-value");
-let expensesValue = document.getElementsByClassName("expenses-value");
-let optionalexpensesValue = document.getElementsByClassName("optionalexpenses-value");
-let incomeValue = document.getElementsByClassName("income-value");
-let mothsavingsValue = document.getElementsByClassName("mothsavings-value");
-let yearsavingsValue = document.getElementsByClassName("yearsavings-value");
+let expensesValue = document.getElementsByClassName("expenses-value")[0];
+let optionalexpensesValue = document.getElementsByClassName("optionalexpenses-value")[0];
+let incomeValue = document.getElementsByClassName("income-value")[0];
+let mothsavingsValue = document.getElementsByClassName("mothsavings-value")[0];
+let yearsavingsValue = document.getElementsByClassName("yearsavings-value")[0];
 let yearValue = document.getElementsByClassName("year-value")[0];
 let monthValue = document.getElementsByClassName("month-value")[0];
 let dayValue = document.getElementsByClassName("day-value")[0];
@@ -37,10 +37,13 @@ startButton.addEventListener('click', function(){
 });
 
 expensesItemBtn.addEventListener('click', function(){
+    console.log("Hello");
+    console.log(expensesItem.length);
     let sum = 0;
     for (let i = 0; i < expensesItem.length; i++) {
         let a = expensesItem[i].value,
             b = expensesItem[++i].value;
+
 
         if ((typeof (a)) != null && (typeof (b)) != null && a != '' && b != '' && a.length < 50) {
             appData.expenses[a] = b;
