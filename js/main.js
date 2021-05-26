@@ -1,37 +1,58 @@
-let money, time;
-
 let startButton = document.getElementById("start");
-let budgetValue = document.getElementsByClassName("budget-value");
-let daybudgetValue = document.getElementsByClassName("daybudget-value");
+
+let budgetValue = document.getElementsByClassName("budget-value")[0];
+let dayBudgetValue = document.getElementsByClassName("daybudget-value")[0];
 let levelValue = document.getElementsByClassName("level-value");
 let expensesValue = document.getElementsByClassName("expenses-value");
 let optionalexpensesValue = document.getElementsByClassName("optionalexpenses-value");
 let incomeValue = document.getElementsByClassName("income-value");
 let mothsavingsValue = document.getElementsByClassName("mothsavings-value");
 let yearsavingsValue = document.getElementsByClassName("yearsavings-value");
-let yearValue = document.getElementsByClassName("year-value");
-let mothValue = document.getElementsByClassName("moth-value");
-let dayValue = document.getElementsByClassName("day-value");
-let expensesItem = document.getElementsByClassName('.expenses-item');
+let yearValue = document.getElementsByClassName("year-value")[0];
+let monthValue = document.getElementsByClassName("month-value")[0];
+let dayValue = document.getElementsByClassName("day-value")[0];
+let expensesItem = document.getElementsByClassName("expenses-item");
 
-let expensesItemBtn = document.getElementsByTagName('button')[0];
-let optionalExpensesItemBtn = document.getElementsByTagName('button')[1];
-let countBudgetBtn = document.getElementsByTagName('button')[2];
+let expensesItemBtn = document.getElementsByTagName("button")[0];
+let optionalExpensesItemBtn = document.getElementsByTagName("button")[1];
+let countBudgetBtn = document.getElementsByTagName("button")[2];
 
-let optionalExpensesItem = document.querySelectorAll('.optionalexpenses-item');
+let optionalExpensesItem = document.querySelectorAll(".optionalexpenses-item");
 
+let money, time;
 
-
-function start() {
-    money = +prompt("Ваш бюджет на месяц?", "");
+startButton.addEventListener('click', function(){
     time = prompt("Введите дату в формате YYYY-MM-DD", "");
+    money = +prompt("Ваш бюджет на месяц?", "");    
 
     while(isNaN(money) || money == "" || money == null) {
         money = +prompt("Ваш бюджет на месяц?", "");
     }
-}
+    appData.budget = money;
+    appData.timeData = time;
+    budgetValue.textContent = money.toFixed();
+    yearValue.value = new Date(Date.parse(time)).getFullYear();
+    monthValue.value = new Date(Date.parse(time)).getMonth() + 1;
+    dayValue.value = new Date(Date.parse(time)).getDate();
+});
 
-start();
+expensesItemBtn.addEventListener('click', function(){
+    let sum = 0;
+    for (let i = 0; i < expensesItem.length; i++) {
+        let a = expensesItem[i].value,
+            b = expensesItem[++i].value;
+
+        if ((typeof (a)) != null && (typeof (b)) != null && a != '' && b != '' && a.length < 50) {
+            appData.expenses[a] = b;
+            sum += +b;
+        } else {
+            i = i - 1;
+        }
+        expensesValue.textContent = sum;
+    }
+});
+
+
 
 let appData = {
     budget: money,
@@ -41,23 +62,7 @@ let appData = {
     income: [],
     savings: true,
 
-    chooseExpenses: function() {
-        for (let i = 0; i < 2; i++) {
-            let a = prompt("Введите обязательную статью расходов в этом месяце", "");
-            let b = +prompt("Во сколько обойдется?", "");
-        
-            if (typeof(a) === "string" && typeof(b) != null && typeof(a) !== null && a.length < 50 && a != "" && b != "") {
-                appData.expenses[a] = b;
-            } else {
-                console.log("Введены некорректные данные");
-                console.log(i);
-                i--;
-            }
-            i++;
-        }  
-    },
-
-    chooseLevel: function() {
+      chooseLevel: function() {
         appData.moneyPerDay = (appData.budget / 30).toFixed();
 
         if (appData.moneyPerDay < 100) {
@@ -93,11 +98,6 @@ let appData = {
          });
         
     },    
-}
-
-console.log("Наша программа включает в себя:");
-for (let key in appData) {
-    console.log(key + ": " + appData[key]);
 }
 
 
